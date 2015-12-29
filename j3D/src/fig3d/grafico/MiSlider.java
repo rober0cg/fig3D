@@ -1,4 +1,4 @@
-package calculo;
+package fig3d.grafico;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;

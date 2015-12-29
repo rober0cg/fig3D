@@ -1,14 +1,16 @@
-package calculo;
+package fig3d.grafico;
 
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import fig3d.calculo.Universo;
+
 public class MiUniverso extends JPanel {
     private static final long serialVersionUID = 118734516L;
-    Universo3D U;
+    Universo U;
     
-    public MiUniverso( Universo3D u) {
+    public MiUniverso( Universo u) {
         U = u;
     }
 

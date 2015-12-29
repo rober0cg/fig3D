@@ -1,21 +1,21 @@
-package calculo;
+package fig3d.objetos2D;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Punto3D {
-    int x, y, z; // Coordenadas cartesianas 3D
-    int i; // índice en el universo de puntos
+public class Punto {
+    public int x, y, z; // Coordenadas cartesianas 3D
+    public int i; // índice en el universo de puntos
     static Pattern pP=Pattern.compile("[+-]*\\d+");
 
-    Punto3D ( int _x, int _y, int _z) {
+    Punto ( int _x, int _y, int _z) {
         x=_x;
         y=_y;
         z=_z;
     }
 
 // P(x,y,z)
-    Punto3D (String p) {
+    Punto (String p) {
         int v[] = new int[3];
         Matcher mP = pP.matcher(p);
         for ( int i=0; mP.find() && i<3 ; i++) {
