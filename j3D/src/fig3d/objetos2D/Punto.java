@@ -8,14 +8,14 @@ public class Punto {
     public int i; // índice en el universo de puntos
     static Pattern pP=Pattern.compile("[+-]*\\d+");
 
-    Punto ( int _x, int _y, int _z) {
+    public Punto ( int _x, int _y, int _z) {
         x=_x;
         y=_y;
         z=_z;
     }
 
 // P(x,y,z)
-    Punto (String p) {
+    public Punto (String p) {
         int v[] = new int[3];
         Matcher mP = pP.matcher(p);
         for ( int i=0; mP.find() && i<3 ; i++) {
@@ -27,7 +27,7 @@ public class Punto {
     }
     
     public String toString() {
-        return "P3D("+x+","+y+","+z+")<"+i+">" ;
+        return "p3D("+x+","+y+","+z+")<"+i+">" ;
     }
 
 }

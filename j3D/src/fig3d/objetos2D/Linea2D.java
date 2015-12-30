@@ -21,17 +21,17 @@ public class Linea2D implements Base2D {
         C=_C;
     }
 
-// L3D(a(ax,ay,az),b(bx,by,bz),C(Cr,Cg,Cb,Ca))
+// L2D(a(ax,ay,az),b(bx,by,bz),C(Cr,Cg,Cb,Ca))
     public Linea2D(String t){
-        LOG.trace("Linea3D");
+        LOG.trace("Linea2D");
 
         String aux1 = t.replace(" ","");
-        LOG.trace("Linea3D ["+aux1+"]");
+        LOG.trace("Linea2D ["+aux1+"]");
 
         Matcher mT = pT.matcher(aux1);
         while ( mT.find() ){
             String aux2 = mT.group();
-            LOG.trace("Linea3D group ["+aux2+"]");
+            LOG.trace("Linea2D group ["+aux2+"]");
             char pc = aux2.charAt(0);
             switch(pc) {
                 case 'a': a = new Punto(aux2) ; break ;

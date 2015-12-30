@@ -4,9 +4,10 @@ import org.apache.log4j.Logger;
 
 import fig3d.objetos2D.Base2D;
 import fig3d.objetos2D.Linea2D;
+import fig3d.objetos2D.Triangulo2D;
+import fig3d.objetos2D.Rectangulo2D;
 import fig3d.objetos2D.PolRegular2D;
 import fig3d.objetos2D.Punto;
-import fig3d.objetos2D.Triangulo2D;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -16,9 +17,6 @@ public class Universo {
 
     MatrizPaso M;
     ArrayList<PuntoCS> P; //distintos puntos
-
-//    ArrayList<Triangulo3D> T;
-//    ArrayList<Linea3D> L;
     ArrayList<Base2D> O;
     
     static double X3FAC = (+2880.0/Math.PI);
@@ -27,42 +25,51 @@ public class Universo {
     public Universo() {
         M = new MatrizPaso(100.0, 100.0, 100.0, 0.0, 0.0, 0.0);
         P = new ArrayList<PuntoCS>();
-//        T = new ArrayList<Triangulo3D>();
-//        L = new ArrayList<Linea3D>();
         O = new ArrayList<Base2D>();
     }
 
-    public void addTriangulo3D ( Triangulo2D t) {
-        LOG.trace("Universo3D.addTriangulo3D t = " + t.toString());
-        O.add(t);
-        addPunto3D(t.a);
-        addPunto3D(t.b);
-        addPunto3D(t.c);
-        LOG.debug("Universo3D.addTriangulo3D O = " + O.toString());
-        LOG.debug("Universo3D.addTriangulo3D P = " + P.toString());
-        return ;
-    }
-    public void addLinea3D ( Linea2D l) {
-        LOG.trace("Universo3D.addLinea3D l = " + l.toString());
-        O.add(l);
-        addPunto3D(l.a);
-        addPunto3D(l.b);
+    public void addLinea2D ( Linea2D o) {
+        LOG.trace("Universo3D.addLinea3D = " + o.toString());
+        O.add(o);
+        addPunto(o.a);
+        addPunto(o.b);
         LOG.debug("Universo3D.addLinea3D O = " + O.toString());
         LOG.debug("Universo3D.addLinea3D P = " + P.toString());
         return ;
     }
-    public void addPolRegular3D ( PolRegular2D r) {
-        LOG.trace("Universo3D.addPolRegular3D r = " + r.toString());
-        O.add(r);
-        for ( int i=0; i<r.nv ; i++) {
-            addPunto3D(r.p[i]);
+    public void addTriangulo2D ( Triangulo2D o) {
+        LOG.trace("Universo3D.addTriangulo3D = " + o.toString());
+        O.add(o);
+        addPunto(o.a);
+        addPunto(o.b);
+        addPunto(o.c);
+        LOG.debug("Universo3D.addTriangulo3D O = " + O.toString());
+        LOG.debug("Universo3D.addTriangulo3D P = " + P.toString());
+        return ;
+    }
+    public void addRectangulo2D ( Rectangulo2D o) {
+        LOG.trace("Universo3D.addRectangulo2D = " + o.toString());
+        O.add(o);
+        addPunto(o.a);
+        addPunto(o.b);
+        addPunto(o.c);
+        addPunto(o.d);
+        LOG.debug("Universo3D.addRectangulo2D O = " + O.toString());
+        LOG.debug("Universo3D.addRectangulo2D P = " + P.toString());
+        return ;
+    }
+    public void addPolRegular2D ( PolRegular2D o) {
+        LOG.trace("Universo3D.addPolRegular3D = " + o.toString());
+        O.add(o);
+        for ( int i=0; i<o.nv ; i++) {
+            addPunto(o.p[i]);
         }
         LOG.debug("Universo3D.addPolRegular3D O = " + O.toString());
         LOG.debug("Universo3D.addPolRegular3D P = " + P.toString());
         return ;
     }
-
-    public void addPunto3D ( Punto p ) {
+    
+    public void addPunto ( Punto p ) {
         PuntoCS pu = new PuntoCS((double)p.x, (double)p.y, (double)p.z);
         p.i = P.indexOf(pu);
         if ( p.i < 0 ) {
@@ -71,6 +78,7 @@ public class Universo {
         }
         return;
     }
+
 
     public void calcula (double x, double y, double z, double a, double b, double c) {
         M.MueveVista(x, y, z, a, b, c);
@@ -83,7 +91,6 @@ public class Universo {
 
     public void pinta (Graphics g, int x0, int y0 ) {
         LOG.trace("Universo3D.pinta x0,y0 = "+x0+","+y0);
-
         for ( Base2D o: O) {
             int i[] = o.getIdxPuntos();
             int n = i.length;

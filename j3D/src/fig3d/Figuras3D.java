@@ -3,11 +3,16 @@ package fig3d;
 import org.apache.log4j.Logger;
 
 import fig3d.calculo.Universo;
+import fig3d.objetos2D.Linea2D;
+import fig3d.objetos2D.Triangulo2D;
+import fig3d.objetos2D.Rectangulo2D;
+import fig3d.objetos2D.PolRegular2D;
+
+import fig3d.objetos3D.Cubo3D;
+import fig3d.objetos3D.Octoedro3D;
+
 import fig3d.grafico.MiSlider;
 import fig3d.grafico.MiUniverso;
-import fig3d.objetos2D.Linea2D;
-import fig3d.objetos2D.PolRegular2D;
-import fig3d.objetos2D.Triangulo2D;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -18,6 +23,7 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionListener;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -48,12 +54,22 @@ public class Figuras3D extends JFrame {
             for(String line; (line = br.readLine()) != null; ) {
                 if ( line.startsWith("#"))
                     continue;
-                if ( line.startsWith("T3D"))
-                    U.addTriangulo3D( new Triangulo2D(line));
-                if ( line.startsWith("L3D"))
-                    U.addLinea3D( new Linea2D(line));
-                if ( line.startsWith("R3D"))
-                    U.addPolRegular3D( new PolRegular2D(line));
+                if ( line.startsWith("L2D"))
+                    U.addLinea2D( new Linea2D(line));
+                if ( line.startsWith("T2D"))
+                    U.addTriangulo2D( new Triangulo2D(line));
+                if ( line.startsWith("R2D"))
+                    U.addRectangulo2D( new Rectangulo2D(line));
+                if ( line.startsWith("P2D"))
+                    U.addPolRegular2D( new PolRegular2D(line));
+                if ( line.startsWith("CUBO3D")) {
+                    Cubo3D c = new Cubo3D(line);
+                    c.add(U);
+                }
+                if ( line.startsWith("OCTO3D")) {
+                    Octoedro3D o = new Octoedro3D(line);
+                    o.add(U);
+                }
             }
             br.close();
             fr.close();

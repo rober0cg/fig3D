@@ -30,17 +30,17 @@ public class PolRegular2D implements Base2D {
         calculaPuntos();
     }
 
-// R3D(c(cx,cy,cz),v(vx,vy,vz),n(nx,ny,nz),r(n),C(Cr,Cg,Cb,Ca))
+// P2D(c(cx,cy,cz),v(vx,vy,vz),n(nx,ny,nz),r(n),C(Cr,Cg,Cb,Ca))
     public PolRegular2D(String t){
-        LOG.trace("Regular3D");
+        LOG.trace("PolRegular2D");
 
         String aux1 = t.replace(" ","");
-        LOG.trace("Regular3D ["+aux1+"]");
+        LOG.trace("PolRegular2D ["+aux1+"]");
 
         Matcher mT = pR.matcher(aux1);
         while ( mT.find() ){
             String aux2 = mT.group();
-            LOG.trace("Regular3D group ["+aux2+"]");
+            LOG.trace("PolRegular2D group ["+aux2+"]");
             char pc = aux2.charAt(0);
             switch(pc) {
             case 'c': c0 = new Punto(aux2) ; break ;
@@ -132,7 +132,7 @@ public class PolRegular2D implements Base2D {
 
     @Override
     public String toString() {
-        return "R3D("+c0+","+v0+","+n0+","+nv+","+C+")" ;
+        return "P3D("+c0+","+v0+","+n0+","+nv+","+C+")" ;
     }
 
     @Override
