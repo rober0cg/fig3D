@@ -43,11 +43,11 @@ public class PolRegular2D implements Base2D {
             LOG.trace("PolRegular2D group ["+aux2+"]");
             char pc = aux2.charAt(0);
             switch(pc) {
-            case 'c': c0 = new Punto(aux2) ; break ;
-            case 'v': v0 = new Punto(aux2) ; break ;
-            case 'n': n0 = new Punto(aux2) ; break ;
-            case 'l': nv = Util.stringToInt(aux2);
-            case 'C': C = Util.stringToColor(aux2);
+            case 'c': c0 = new Punto(aux2); break;
+            case 'v': v0 = new Punto(aux2); break;
+            case 'n': n0 = new Punto(aux2); break;
+            case 'l': nv = Util.stringToInt(aux2); break;
+            case 'C': C = Util.stringToColor(aux2); break;
             }
         }
         calculaPuntos();

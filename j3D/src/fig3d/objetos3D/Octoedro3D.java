@@ -34,13 +34,13 @@ public class Octoedro3D {
             LOG.trace("Octoedro3D group ["+aux2+"]");
             char pc = aux2.charAt(0);
             switch(pc) {
-                case 'a': a = new Punto(aux2) ; break ;
-                case 'b': b = new Punto(aux2) ; break ;
-                case 'c': c = new Punto(aux2) ; break ;
-                case 'd': d = new Punto(aux2) ; break ;
-                case 'e': e = new Punto(aux2) ; break ;
-                case 'f': f = new Punto(aux2) ; break ;
-                case 'C': C = Util.stringToColor(aux2);
+                case 'a': a = new Punto(aux2); break;
+                case 'b': b = new Punto(aux2); break;
+                case 'c': c = new Punto(aux2); break;
+                case 'd': d = new Punto(aux2); break;
+                case 'e': e = new Punto(aux2); break;
+                case 'f': f = new Punto(aux2); break;
+                case 'C': C = Util.stringToColor(aux2); break;
             }
         }
     }

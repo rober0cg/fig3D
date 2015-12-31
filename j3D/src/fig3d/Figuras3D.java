@@ -10,6 +10,7 @@ import fig3d.objetos2D.PolRegular2D;
 
 import fig3d.objetos3D.Cubo3D;
 import fig3d.objetos3D.Octoedro3D;
+import fig3d.objetos3D.Esfera3D;
 
 import fig3d.grafico.MiSlider;
 import fig3d.grafico.MiUniverso;
@@ -23,7 +24,6 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionListener;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -36,7 +36,7 @@ public class Figuras3D extends JFrame {
     private static final long serialVersionUID = 198932675L;
 
     protected boolean done = false;
-    int nSleep = 40;
+    private static final int nSleep = 40;
 
     private MiSlider sX, sY, sZ, sA, sB, sC;
     private MiUniverso uU;
@@ -68,6 +68,10 @@ public class Figuras3D extends JFrame {
                 }
                 if ( line.startsWith("OCTO3D")) {
                     Octoedro3D o = new Octoedro3D(line);
+                    o.add(U);
+                }
+                if ( line.startsWith("ESFERA3D")) {
+                    Esfera3D o = new Esfera3D(line);
                     o.add(U);
                 }
             }
@@ -104,12 +108,12 @@ public class Figuras3D extends JFrame {
 
         uU = new MiUniverso(U);
         X = Y = Z = A = B = C = 0.0;
-        
+
         sX = new MiSlider("x", -1000, +1000, +500);
         sY = new MiSlider("y", -1000, +1000, +500);
         sZ = new MiSlider("z", -1000, +1000, +500);
         sA = new MiSlider("a",  -180, +180, -135);
-        sB = new MiSlider("b",  -180, +180,  -36);
+        sB = new MiSlider("b",   -90,  +90,  -36);
         sC = new MiSlider("c",  -180, +180,    0);
 
         pnXYZ = new JPanel();
@@ -166,6 +170,7 @@ public class Figuras3D extends JFrame {
         a = (double)sA.getValue();
         b = (double)sB.getValue();
         c = (double)sC.getValue();
+
         if ( x!=X || y!=Y || z!=Z || a!=A || b!=B || c!=C ) { // calcular sólo si ha habido cambio
             X=x; Y=y; Z=z; A=a; B=b; C=c;
             A *= (Math.PI / 180 ); // pasar de grados a radianes

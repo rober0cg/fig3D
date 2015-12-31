@@ -35,10 +35,10 @@ public class Triangulo2D implements Base2D {
             LOG.trace("Triangulo3D group ["+aux2+"]");
             char pc = aux2.charAt(0);
             switch(pc) {
-                case 'a': a = new Punto(aux2) ; break ;
-                case 'b': b = new Punto(aux2) ; break ;
-                case 'c': c = new Punto(aux2) ; break ;
-                case 'C': C = Util.stringToColor(aux2);
+                case 'a': a = new Punto(aux2); break;
+                case 'b': b = new Punto(aux2); break;
+                case 'c': c = new Punto(aux2); break;
+                case 'C': C = Util.stringToColor(aux2); break;
             }
         }
     }

@@ -103,7 +103,7 @@ public class Universo {
             g.setColor(o.getColor());
             if ( n==1 )      g.drawLine(x[0],y[0],x[0],y[0]);
             else if ( n==2 ) g.drawLine(x[0],y[0],x[1],y[1]);
-            else             g.fillPolygon(x, y, n);
+            else             g.drawPolygon(x, y, n);
             LOG.debug("Universo3D.pinta poligono3D o="+o);
         }
 
