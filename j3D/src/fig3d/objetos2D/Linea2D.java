@@ -23,7 +23,7 @@ public class Linea2D implements Base2D {
 
 // L2D(a(ax,ay,az),b(bx,by,bz),C(Cr,Cg,Cb,Ca))
     public Linea2D(String t){
-        LOG.trace("Linea2D");
+//        LOG.trace("Linea2D");
 
         String aux1 = t.replace(" ","");
         LOG.trace("Linea2D ["+aux1+"]");

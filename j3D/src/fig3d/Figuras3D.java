@@ -2,18 +2,12 @@ package fig3d;
 
 import org.apache.log4j.Logger;
 
-import fig3d.calculo.Universo;
-import fig3d.objetos2D.Linea2D;
-import fig3d.objetos2D.Triangulo2D;
-import fig3d.objetos2D.Rectangulo2D;
-import fig3d.objetos2D.PolRegular2D;
+import fig3d.calculo.*;
+import fig3d.objetos2D.*;
+import fig3d.objetos3D.*;
+import fig3d.superficies3D.*;
 
-import fig3d.objetos3D.Cubo3D;
-import fig3d.objetos3D.Octoedro3D;
-import fig3d.objetos3D.Esfera3D;
-
-import fig3d.grafico.MiSlider;
-import fig3d.grafico.MiUniverso;
+import fig3d.grafico.*;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -72,6 +66,10 @@ public class Figuras3D extends JFrame {
                 }
                 if ( line.startsWith("ESFERA3D")) {
                     Esfera3D o = new Esfera3D(line);
+                    o.add(U);
+                }
+                if ( line.startsWith("FZ3D")) {
+                    Fz3D o = new Fz3D(line);
                     o.add(U);
                 }
             }
@@ -143,7 +141,7 @@ public class Figuras3D extends JFrame {
             public void run() {
                 LOG.trace("Figuras3D.thread.start.run INI");
                 while (!done) {
-                    LOG.trace("Figuras3D.thread.start.run STEP");
+//                    LOG.trace("Figuras3D.thread.start.run STEP");
                     Figuras3D.this.repaint();
                     try {
                         Thread.sleep(nSleep);
@@ -159,7 +157,7 @@ public class Figuras3D extends JFrame {
 
     @Override
     public void paint(Graphics g) {
-        LOG.trace("Figuras3D.paint INI");
+//        LOG.trace("Figuras3D.paint INI");
 
         super.paint(g);
 
@@ -171,16 +169,76 @@ public class Figuras3D extends JFrame {
         b = (double)sB.getValue();
         c = (double)sC.getValue();
 
+//  Implementar giro sobre eje
+        int gx = sX.getGiro();
+        int gy = sY.getGiro();
+        int gz = sZ.getGiro();
+
+        if ( gx!=0 ) { // giro sobre eje x
+            // pasamos C(y,z) a P(r,a), incrementamos angulo y volvemos a C(y',z')
+            double rad = Math.hypot(z,y);  // radio
+            double ang = Math.atan2(z,y);  // angulo en radianes
+            ang += ( ((double)gx) * Math.PI / 180.0 );  // le sumamos el giro
+
+            y = rad * Math.cos(ang);
+            z = rad * Math.sin(ang);
+
+            sY.setValue((int)Math.round(y));
+            sZ.setValue((int)Math.round(z));
+        }
+
+        if ( gy!=0 ) { // giro sobre eje y
+            // pasamos C(z, x) a P(r,a), variamos angulo y volvemos a C(z',x')
+            double rad = Math.hypot(x,z);  // radio
+            double ang = Math.atan2(x,z);  // angulo en radianes
+            ang += ( ((double)gy) * Math.PI / 180.0 );  // le sumamos el giro
+
+            z = rad * Math.cos(ang);
+            x = rad * Math.sin(ang);
+
+            sX.setValue((int)Math.round(x));
+            sZ.setValue((int)Math.round(z));
+        }
+
+        if ( gz!=0 ) { // giro sobre eje z
+            // pasamos C(x,y) a P(r,a), variamos a y volvemos a C(x',y')
+            double rad = Math.hypot(y,x);  // radio
+            double ang = Math.atan2(y,x);  // angulo en radianes
+            ang += ( ((double)gz) * Math.PI / 180.0 );  // le sumamos el giro
+
+            x = rad * Math.cos(ang);
+            y = rad * Math.sin(ang);
+
+            sX.setValue((int)Math.round(x));
+            sY.setValue((int)Math.round(y));
+        }
+
+        if ( gx!=0 || gy!=0 || gz!=0 ) {
+            // si ha habido giro, orientar punto de vista hacia eje de coordenadas
+            // el punto de vista está en x,y,z, en esféricas es (r, a, b)
+            PuntoCS v = new PuntoCS(x,y,z);
+            v.ctop();
+            a = v.a * 180.0 / Math.PI ;
+            b = v.b * 180.0 / Math.PI ;
+            a += 180.0;
+            if ( a>+180.0 ) a-=360.0;
+            if ( a<-180.0 ) a+=360.0;
+            b = -b;
+
+            sA.setValue((int)Math.round(a));
+            sB.setValue((int)Math.round(b));
+        }
+
         if ( x!=X || y!=Y || z!=Z || a!=A || b!=B || c!=C ) { // calcular sólo si ha habido cambio
             X=x; Y=y; Z=z; A=a; B=b; C=c;
-            A *= (Math.PI / 180 ); // pasar de grados a radianes
-            B *= (Math.PI / 180 );
-            C *= (Math.PI / 180 );
+            A *= (Math.PI / 180.0 ); // pasar de grados a radianes
+            B *= (Math.PI / 180.0 );
+            C *= (Math.PI / 180.0 );
             U.calcula(X,Y,Z,A,B,C);
         }
         
 
-        LOG.trace("Figuras3D.paint END");
+//        LOG.trace("Figuras3D.paint END");
     }
     
     @Override

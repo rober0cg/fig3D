@@ -71,7 +71,7 @@ public class PuntoCS  {
         if ( o== this )
             return true;
         PuntoCS p = (PuntoCS)o;
-        LOG.trace("Punto3Dcp.equals ("+x+","+y+","+z+") = ("+p.x+","+p.y+","+p.z+")");
+//        LOG.trace("Punto3Dcp.equals ("+x+","+y+","+z+") = ("+p.x+","+p.y+","+p.z+")");
         return ( (x==p.x) && (y==p.y) && (z==p.z) );
     }
 

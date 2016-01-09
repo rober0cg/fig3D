@@ -21,6 +21,7 @@ public class MiSlider extends JPanel {
     JSlider s;  // posición o ángulo
     JLabel l;   // variable y posición
     JSpinner v; // velocidad de cambio
+    JSpinner g; // velocidad de giro sobre eje
     String t;   // nombre de la variable
 
     static final int freq = 0; // repintado por segundo
@@ -46,6 +47,9 @@ public class MiSlider extends JPanel {
         v = new JSpinner(new SpinnerNumberModel(0, -10, 10, 1));
         v.setPreferredSize( new Dimension(24,24));
 
+        g = new JSpinner(new SpinnerNumberModel(0, -10, 10, 1));
+        g.setPreferredSize( new Dimension(24,24));
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -67,12 +71,20 @@ public class MiSlider extends JPanel {
         this.add(l,c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.1;
+        c.weightx = 0.05;
         c.gridx = 2;
         c.gridy = 0;
-        c.insets = new Insets(0,0,0,4);
+        c.insets = new Insets(0,0,0,2);
         c.anchor = GridBagConstraints.LINE_END;
         this.add(v,c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.05;
+        c.gridx = 3;
+        c.gridy = 0;
+        c.insets = new Insets(0,0,0,2);
+        c.anchor = GridBagConstraints.LINE_END;
+        this.add(g,c);
 
     }
 
@@ -88,18 +100,21 @@ public class MiSlider extends JPanel {
         }
         return n;
     }
-/*
-    public void setValue(int n){
-        s.setValue(n);
+    public void setValue(int val){
+        s.setValue(val);
     }
 
-    public int getSpeed(){
+    public int getVelocidad(){
         return (int)v.getValue();
     }
-*/
+
+    public int getGiro(){
+        return (int)g.getValue();
+    }
+
+
     class MiSliderAccion implements ChangeListener{
         public void stateChanged(ChangeEvent e){
-//            v.setValue(0);
             l.setText(t + ": "+ Integer.toString(s.getValue()));
         }
     }
