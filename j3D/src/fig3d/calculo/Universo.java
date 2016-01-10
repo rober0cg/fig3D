@@ -12,13 +12,16 @@ import fig3d.objetos2D.Punto;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 public class Universo {
     private static final Logger LOG = Logger.getLogger(Universo.class);
 
     MatrizPaso M;
     ArrayList<PuntoCS> P; //distintos puntos
     ArrayList<Base2D> O;
-    
+
+    // Factor de radianes a pixels
     static double X3FAC = (+2880.0/Math.PI);
     static double Y3FAC = (+2880.0/Math.PI);
 
@@ -91,22 +94,63 @@ public class Universo {
 
     public void pinta (Graphics g, int x0, int y0 ) {
 //        LOG.trace("Universo3D.pinta x0,y0 = "+x0+","+y0);
-        for ( Base2D o: O) {
-            int i[] = o.getIdxPuntos();
-            int n = i.length;
+
+        // cálculo de zOrder de cada O Base2D
+        zOrderBase2D rDist[] = new zOrderBase2D[O.size()];
+        for ( int i=0 ; i<O.size() ; i++ ) {
+            int idxPtos[] = O.get(i).getIdxPuntos();
+            int n = idxPtos.length;
+            double r=0.0;
+            for ( int v=0 ; v<n ; v++ )
+                r += P.get(idxPtos[v]).r ;
+            r /= (double)n;
+            rDist[i] = new zOrderBase2D(i,r);
+        }
+        Arrays.sort(rDist);
+
+        for ( int i=0 ; i<rDist.length ; i++ ) {
+            Base2D o = O.get(rDist[i].idx) ;
+       
+//        for ( Base2D o: O) {
+            boolean esVisible;
+            int idxPtos[] = o.getIdxPuntos();
+            int n = idxPtos.length;
             int x[] = new int[n];
             int y[] = new int[n];
+            esVisible = true;
             for ( int v=0 ; v<n ; v++ ) {
-                x[v] = x0 - (int)(X3FAC * P.get(i[v]).a) ;
-                y[v] = y0 - (int)(Y3FAC * P.get(i[v]).b) ;
+                if ( P.get(idxPtos[v]).r<=0.0 ) // si hay algún punto 'noVisible'
+                    esVisible = false;
+                x[v] = x0 - (int)(Math.round(X3FAC * P.get(idxPtos[v]).a)) ;
+                y[v] = y0 - (int)(Math.round(Y3FAC * P.get(idxPtos[v]).b)) ;
             }
-            g.setColor(o.getColor());
-            if ( n==1 )      g.drawLine(x[0],y[0],x[0],y[0]);
-            else if ( n==2 ) g.drawLine(x[0],y[0],x[1],y[1]);
-            else             g.drawPolygon(x, y, n);
-//            LOG.debug("Universo3D.pinta poligono3D o="+o);
+            if (esVisible) {
+                g.setColor(o.getColor());
+                if ( n==1 )      g.drawLine(x[0],y[0],x[0],y[0]);
+                else if ( n==2 ) g.drawLine(x[0],y[0],x[1],y[1]);
+                else {           g.fillPolygon(x, y, n);
+                                 g.drawPolygon(x, y, n);
+                }
+            //  LOG.debug("Universo3D.pinta poligono3D o="+o);
+            }
         }
-
     }
 
+    private class zOrderBase2D implements Comparable<zOrderBase2D> {
+        int idx;
+        double r;
+        static final double precision = 1000000.0;
+
+        public zOrderBase2D ( int _idx, double _r ) {
+            idx = _idx;
+            r = _r ;
+        }
+
+        @Override
+        public int compareTo(zOrderBase2D o) {
+            if ( this == o ) return 0;
+            return (int) (precision * (o.r - this.r));
+        }
+    }
+    
 }

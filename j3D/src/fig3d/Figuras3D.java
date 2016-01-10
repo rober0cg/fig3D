@@ -107,12 +107,12 @@ public class Figuras3D extends JFrame {
         uU = new MiUniverso(U);
         X = Y = Z = A = B = C = 0.0;
 
-        sX = new MiSlider("x", -1000, +1000, +500);
-        sY = new MiSlider("y", -1000, +1000, +500);
-        sZ = new MiSlider("z", -1000, +1000, +500);
-        sA = new MiSlider("a",  -180, +180, -135);
-        sB = new MiSlider("b",   -90,  +90,  -36);
-        sC = new MiSlider("c",  -180, +180,    0);
+        sX = new MiSlider("x", -1000, +1000, +500, 1);
+        sY = new MiSlider("y", -1000, +1000, +500, 1);
+        sZ = new MiSlider("z", -1000, +1000, +500, 1);
+        sA = new MiSlider("a",  -180, +180, -135, 10);
+        sB = new MiSlider("b",   -90,  +90,  -36, 10);
+        sC = new MiSlider("c",  -180, +180,    0, 10);
 
         pnXYZ = new JPanel();
         pnABC = new JPanel();
@@ -162,12 +162,12 @@ public class Figuras3D extends JFrame {
         super.paint(g);
 
         double x, y, z, a, b, c;
-        x = (double)sX.getValue();
-        y = (double)sY.getValue();
-        z = (double)sZ.getValue();
-        a = (double)sA.getValue();
-        b = (double)sB.getValue();
-        c = (double)sC.getValue();
+        x = sX.getValue();
+        y = sY.getValue();
+        z = sZ.getValue();
+        a = sA.getValue();
+        b = sB.getValue();
+        c = sC.getValue();
 
 //  Implementar giro sobre eje
         int gx = sX.getGiro();
@@ -183,8 +183,8 @@ public class Figuras3D extends JFrame {
             y = rad * Math.cos(ang);
             z = rad * Math.sin(ang);
 
-            sY.setValue((int)Math.round(y));
-            sZ.setValue((int)Math.round(z));
+            sY.setValue(Math.round(y));
+            sZ.setValue(Math.round(z));
         }
 
         if ( gy!=0 ) { // giro sobre eje y
@@ -196,8 +196,8 @@ public class Figuras3D extends JFrame {
             z = rad * Math.cos(ang);
             x = rad * Math.sin(ang);
 
-            sX.setValue((int)Math.round(x));
-            sZ.setValue((int)Math.round(z));
+            sX.setValue(Math.round(x));
+            sZ.setValue(Math.round(z));
         }
 
         if ( gz!=0 ) { // giro sobre eje z
@@ -209,8 +209,8 @@ public class Figuras3D extends JFrame {
             x = rad * Math.cos(ang);
             y = rad * Math.sin(ang);
 
-            sX.setValue((int)Math.round(x));
-            sY.setValue((int)Math.round(y));
+            sX.setValue(Math.round(x));
+            sY.setValue(Math.round(y));
         }
 
         if ( gx!=0 || gy!=0 || gz!=0 ) {
@@ -225,8 +225,8 @@ public class Figuras3D extends JFrame {
             if ( a<-180.0 ) a+=360.0;
             b = -b;
 
-            sA.setValue((int)Math.round(a));
-            sB.setValue((int)Math.round(b));
+            sA.setValue(Math.round(a));
+            sB.setValue(Math.round(b));
         }
 
         if ( x!=X || y!=Y || z!=Z || a!=A || b!=B || c!=C ) { // calcular sólo si ha habido cambio

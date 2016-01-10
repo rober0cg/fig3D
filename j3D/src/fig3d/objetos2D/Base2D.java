@@ -6,5 +6,4 @@ public interface Base2D {
     public int[] getIdxPuntos();
     public Color getColor();
     public String toString();
-    
 }

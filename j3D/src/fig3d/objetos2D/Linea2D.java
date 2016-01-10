@@ -58,5 +58,4 @@ public class Linea2D implements Base2D {
     public Color getColor() {
         return C;
     }
-
 }

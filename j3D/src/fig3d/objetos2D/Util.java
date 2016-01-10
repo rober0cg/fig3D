@@ -1,13 +1,13 @@
 package fig3d.objetos2D;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Util {
-    private static final Logger LOG = Logger.getLogger(Util.class);
+//    private static final Logger LOG = Logger.getLogger(Util.class);
 
     static Pattern pC=Pattern.compile("\\d+");
     static Pattern pN=Pattern.compile("[+-]*\\d+");
@@ -22,7 +22,9 @@ public class Util {
             v[i] = Integer.valueOf(mC.group());
         }
 //        LOG.trace("Util.stringToColor String("+c+") = "+v[0]+","+v[1]+","+v[2]+","+v[3]);
-        return new Color(v[0],v[1],v[2],v[3]);
+//        return new Color(v[0],v[1],v[2],100); // sin transparecia, todos opacos
+        return new Color(v[0],v[1],v[2],128); // todos semitransparentes
+//        return new Color(v[0],v[1],v[2],v[3]);
     }
 
     public static int stringToInt(String x) {

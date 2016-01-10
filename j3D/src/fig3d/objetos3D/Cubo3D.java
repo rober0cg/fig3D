@@ -54,14 +54,13 @@ public class Cubo3D {
     //  | /d|-/c
     //  a/- b/
     public void add (Universo U){
-        // abcd efgh
+        // vertice a: abcd adhe aefb
         U.addRectangulo2D(new Rectangulo2D(a,b,c,d,C));
-        U.addRectangulo2D(new Rectangulo2D(e,f,g,h,C));
-        // abfe dcgh
-        U.addRectangulo2D(new Rectangulo2D(a,b,f,e,C));
-        U.addRectangulo2D(new Rectangulo2D(d,c,g,h,C));
-        // adhe bcgf
         U.addRectangulo2D(new Rectangulo2D(a,d,h,e,C));
-        U.addRectangulo2D(new Rectangulo2D(b,c,g,f,C));
+        U.addRectangulo2D(new Rectangulo2D(a,e,f,b,C));
+        // vertice g: ghdc gfeh gcbf
+        U.addRectangulo2D(new Rectangulo2D(g,h,d,c,C));
+        U.addRectangulo2D(new Rectangulo2D(g,f,e,h,C));
+        U.addRectangulo2D(new Rectangulo2D(g,c,b,f,C));
     }
 }

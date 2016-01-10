@@ -23,24 +23,23 @@ public class MiSlider extends JPanel {
     JSpinner v; // velocidad de cambio
     JSpinner g; // velocidad de giro sobre eje
     String t;   // nombre de la variable
+    int d; // divisor
 
-    static final int freq = 0; // repintado por segundo
-    int r=0;
-
-    public MiSlider( String lab, int min, int max, int ini) {
+    public MiSlider( String lab, int min, int max, int ini, int div) {
 
         t = lab;
+        d = div;
 
         l = new JLabel();
         l.setPreferredSize(new Dimension(36,28));
-        l.setText(t + ": "+ Integer.toString(ini));
+        l.setText(t + ": "+ String.format("%.1f", (double)ini));
         l.setHorizontalAlignment(SwingConstants.LEFT);
 
-        s = new JSlider(JSlider.HORIZONTAL, min, max, ini);
+        s = new JSlider(JSlider.HORIZONTAL, min*d, max*d, ini*d);
         s.setPreferredSize( new Dimension(200,28));
         s.setPaintTicks(true);
-        s.setMajorTickSpacing((max-min)/4);
-        s.setMinorTickSpacing((max-min)/20);
+        s.setMajorTickSpacing((max-min)*d/4);
+        s.setMinorTickSpacing((max-min)*d/20);
 //        s.setPaintLabels(true);
         s.addChangeListener(new MiSliderAccion());
 
@@ -88,20 +87,17 @@ public class MiSlider extends JPanel {
 
     }
 
-    public int getValue(){
+    public double getValue(){
         int n = s.getValue();
-        if ( ++r>freq ) {
-            int i = (int)v.getValue();
-            if ( i!= 0) {
-                n += i;
-                s.setValue(n);
-            }
-            r=0;
+        int i = (int)v.getValue();
+        if ( i!= 0) {
+            n += i;
+            s.setValue(n);
         }
-        return n;
+        return ((double)n/(double)d);
     }
-    public void setValue(int val){
-        s.setValue(val);
+    public void setValue(double val){
+        s.setValue((int)(val*(double)d));
     }
 
     public int getVelocidad(){
@@ -115,7 +111,7 @@ public class MiSlider extends JPanel {
 
     class MiSliderAccion implements ChangeListener{
         public void stateChanged(ChangeEvent e){
-            l.setText(t + ": "+ Integer.toString(s.getValue()));
+            l.setText(t + ": "+ String.format("%.1f", ((double)s.getValue())/((double)d)) );
         }
     }
     

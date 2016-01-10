@@ -41,7 +41,7 @@ public class PuntoCS  {
                 else { // (0,0,z)
                     a = 0.0 ;
                     b = Math.signum(z) * (Math.PI / 2) ;
-                    r = z ;
+                    r = Math.abs(z) ;
                 }
             }
             else { // (0,y,z)
@@ -54,6 +54,7 @@ public class PuntoCS  {
             a = Math.atan2 ( y , x ) ;
             b = Math.atan2 ( z , Math.hypot ( x, y ) ) ;
             r = Math.sqrt ( x*x + y*y + z*z ) ;
+            r *= Math.signum(x) ; // para control de puntos delante y detrás
         }
     }
 

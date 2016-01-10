@@ -45,20 +45,25 @@ public class Octoedro3D {
         }
     }
 
-    //    /f\ 
-    //  d/-|e\
-    //  | /c\|
-    //  a/- b\
+    //    f 
+    //  e/--\d
+    //  |/  \|
+    //  b -- c
+    //    \a/
+    // a es Polo Sur, f es Polo Norte
+    // b, c, d y e, el Ecuadro
     public void add (Universo U){
-        // abc def
+        // abc acd ade aeb - pirámide inferior
         U.addTriangulo2D(new Triangulo2D(a,b,c,C));
-        U.addTriangulo2D(new Triangulo2D(d,e,f,C));
-        // abd cef
-        U.addTriangulo2D(new Triangulo2D(a,b,d,C));
-        U.addTriangulo2D(new Triangulo2D(c,e,f,C));
-        // adf bce
-        U.addTriangulo2D(new Triangulo2D(a,d,f,C));
-        U.addTriangulo2D(new Triangulo2D(b,c,e,C));
+        U.addTriangulo2D(new Triangulo2D(a,c,d,C));
+        U.addTriangulo2D(new Triangulo2D(a,d,e,C));
+        U.addTriangulo2D(new Triangulo2D(a,e,b,C));
+        // fcb fdc fed fbe - pirámide inferior
+        U.addTriangulo2D(new Triangulo2D(f,c,b,C));
+        U.addTriangulo2D(new Triangulo2D(f,d,c,C));
+        U.addTriangulo2D(new Triangulo2D(f,e,d,C));
+        U.addTriangulo2D(new Triangulo2D(f,b,e,C));
+        
     }
 
     
